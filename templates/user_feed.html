@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0"
+           xmlns:media="http://search.yahoo.com/mrss/"
+           xmlns:dc="http://purl.org/dc/elements/1.1/">
+
+<channel>
+  <title>{{ owner.username|escape }} - I4PC</title>
+  <link>http://www.i4pc.jp/user/{{ owner.id }}</link>
+  <description></description>
+  <pubDate>{{ feed.0.pub_date }}</pubDate>
+    <generator>http://www.i4pc.jp/</generator>
+  <image>
+    <url>{{ owner.profile_picture }}</url>
+    <title>{{ owner.username }} - I4PC</title>
+    <link>http://www.i4pc.jp/user/{{ owner.id }}</link>
+  </image>
+
+{% for media in feed %}
+  <item>
+    <title>{{ media.caption.text }}</title>
+    <link>http://www.i4pc.jp/photo/{{ media.id }}</link>
+    <description>
+      &lt;p&gt;
+        &lt;img src=&quot;{{ media.images.low_resolution.url }}&quot; /&gt;
+      &lt;/p&gt;
+
+      &lt;p&gt;
+        by {{ media.user.username }}
+      &lt;/p&gt;
+
+    </description>
+    <pubDate>{{ media.pub_date }}</pubDate>
+    <author>{{ media.user.username }}</author>
+    <dc:date.Taken>{{ media.pub_date }}</dc:date.Taken>
+    <media:thumbnail url="{{ media.images.thumbnail.url }}" />
+    <media:content url="{{ media.images.standard_resolution.url }}" />
+    <media:title>{{ media.caption.text }}</media:title>
+    
+  </item>
+{% endfor %}
+
+</channel>
+
+#Thu, 03 Feb 2011 15:26:33 -0800

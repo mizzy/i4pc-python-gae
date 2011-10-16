@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block title %}Login - Instagram for PC{% endblock %}
+{% block bodyclass %}column_wide{% endblock %}
+
+{% block content %}
+
+<!-- Main content area -->
+<div id="content">
+
+	<div id="login_area">
+
+                {% if error %}
+		<div class="error">
+			Wrong account and password combination.
+		</div>
+                {% endif %}
+
+		<form action="/login" method="post">
+			<fieldset>
+				<legend>Login</legend>
+				<p>
+					<label for="username">Username:</label>
+					<input type="text" id="username" name="username" tabindex="1" />
+				</p>
+				<p>
+					<label for="user_password">Password:</label>
+					<input type="password" id="password" name="password" tabindex="2" />
+				</p>
+				<p>
+					<input type="submit" value="Login" id="button" tabindex="3" />
+				</p>
+			</fieldset>
+		</form>
+
+	</div>
+
+</div>
+<!-- End of Main content area -->
+
+{% endblock %}

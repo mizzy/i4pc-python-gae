@@ -1,0 +1,143 @@
+{% extends "base.html" %}
+
+{% block meta %}
+<meta property="og:image" content="{{ owner.profile_picture }}" />
+{% endblock %}
+
+{% block title %}{{ owner.username|escape }} - I4PC{% endblock %}
+
+{% block feed %}
+<link rel="alternate" href="/user/{{ owner.id }}/feed"  type="application/rss+xml" title="{{ owner.username }} - I4PC" />
+{% endblock %}
+
+{% block bodyid %}user{% endblock %}
+{% block bodyclass %}column_nomal{% ifequal user.id owner.id %} you{% endifequal %}{% endblock %}
+
+{% block tweet %}{{ owner.username }} - I4PC{% endblock %}
+
+{% block content %}
+
+
+<div id="content">
+
+
+<div id="photos_area" class="content">
+
+    {% for media in feed %}
+    <div class="box_m">
+
+        {% if media.comment_count %}<div class="comment_num">{{ media.comment_count }}</div>{% endif %}
+
+        <div class="photo size_m">
+          <a href="/photo/{{ media.id }}"><img src="{{ media.images.low_resolution.url }}" /></a>
+        </div>
+
+        <div class="foot">
+
+            <div class="like {% if media.user_has_liked %}liked{% endif %}" id="like_div_{{ media.id }}">
+            {% if login %}
+                <a href="javascript:like.action('{{ media.id }}')" title="{% if media.user_has_liked %}Unlike this{% else %}Like this{% endif %}"><span class="{% if media.user_has_liked %}liked_icon{% else %}like_icon{% endif %}" id="like_icon_{{ media.id }}">&hearts;</span><span id="like_count_{{ media.id }}" class="like_count">{{ media.like_count }}</span></a>
+            {% else %}
+                <div class="no_link"><span class="no_link_heart">&hearts;</span><span class="no_link_count">{{ media.like_count }}</span></div>
+            {% endif %}
+            </div>
+            <div class="time">{{ media.time_ago }}</div>
+            <div class="description">{{ media.caption.text|escape }}</div>
+        </div>
+        <br class="clear" />
+    </div>
+    {% endfor %}
+
+        {% if max_id %}
+        <div class="pager">
+            <a rel="next" href="/user/{{ owner.username }}?max_id={{ max_id }}"></a>
+        </div>
+        {% endif %}
+
+</div>
+
+
+
+<aside>
+
+    <div id="profile_area">
+
+        <div class="profile">
+            <div class="icon"><a href="/user/{{ owner.username|escape }}"><img src="{{ owner.profile_picture }}" /></a></div>
+            <div class="screen">
+                <a href="/user/{{ owner.username|escape }}" title="{{ owner.full_name|escape }}">{{ owner.username|escape }}</a>
+                {% ifequal owner.username user.username %}
+                <p>{{ owner.full_name }}</p>
+                {% endifequal %}
+            </div>
+
+            {% ifnotequal owner.username user.username %}
+
+            <div id="follow_area">
+                {% ifequal relationship.outgoing_status 'none' %}
+                <a id="follow_status" href="javascript:follow_action({{ owner.id }})" class="follow">Follow</a>
+                {% endifequal %}
+                {% ifequal relationship.outgoing_status 'requested' %}
+                <a id="follow_status" href="javascript:follow_action({{ owner.id }})" class="requested">Requested</a>
+                {% endifequal %}
+                {% ifequal relationship.outgoing_status 'follows' %}
+                <a id="follow_status" href="javascript:follow_action({{ owner.id }})" class="following">Following</a>
+                {% endifequal %}
+            </div>
+
+            {% if private %}
+            <div class="private">
+                This user setting is private.
+            </div>
+            {% endif %}
+
+        {% endifnotequal %}
+
+        </div>
+
+        <div class="stats">
+            <ul>
+                <li class="photos"><span>{{ owner.counts.media }}</span></li>
+                <li class="followers"><span>{{ owner.counts.followed_by }}</span></li>
+                <li class="following"><span>{{ owner.counts.follows }}</span></li>
+            </ul>
+        </div>
+        <br class="clear" />
+    </div>
+
+
+
+    <div class="ads">
+        <script type="text/javascript"><!--
+            google_ad_client = "ca-pub-3240699513997091";
+            /* I4PC */
+            google_ad_slot = "1067265947";
+            google_ad_width = 180;
+            google_ad_height = 150;
+            //-->
+        </script>
+        <script type="text/javascript" src="http://pagead2.googlesyndication.com/pagead/show_ads.js"></script>
+    </div>
+
+
+    <div id="following_area">
+        {% for following in followings %}<a href="/user/{{ following.username|escape }}" title="{{ following.username|escape }}"><img src="{{ following.profile_picture }}" class="icon" /></a>{% endfor %}
+    <br class="clear" />
+    </div>
+
+
+    <div class="ad_banner">
+        <a href="http://calamel.jp/?act=event&eid=smartphone" target="_blank"><img src="http://calamel.jp/img/shared/top/smartphone_170_62.gif" alt="スマートフォン女子 - カラメル"/></a>
+    </div>
+
+
+</aside>
+
+
+
+
+
+</div>
+<!-- // content -->
+
+{% endblock %}

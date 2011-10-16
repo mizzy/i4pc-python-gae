@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+
+{% block title %}
+  {% if login %}
+    {{ title }} - I4PC
+  {% else %}
+    I4PC - Instagram for PC
+  {% endif %}
+{% endblock %}
+
+{% block bodyid %}{% ifequal path '/liked' %}liked{% else %}feed{% endifequal %}{% endblock %}
+
+{% block bodyclass %}column_wide{% endblock %}
+
+{% block tweet %}I4PC - Instagram for PC{% endblock %}
+
+{% block content %}
+
+<div id="content">
+
+    <div id="photos_area" class="content">
+
+        <div class="photo {% if login %}ad_m box_m{% else %}ad_s box_s{% endif %}">
+            <a href="http://p.booklog.jp/books?s=7" target="_blank"><img src="/img/ad/puboo{% if login %}_m{% else %}_s{% endif %}.png" /></a>
+            <div class="ad_foot">
+                Ads by Puboo
+            </div>
+        </div>
+
+        <div class="photo {% if login %}ad_m box_m{% else %}ad_s box_s{% endif %}">
+            <a href="http://info.jugem.jp/?eid=16471&ref=i4pc" target="_blank"><img src="/img/ad/jugem{% if login %}_m{% else %}_s{% endif %}.png" /></a>
+            <div class="ad_foot">
+                Ads by JUGEM
+            </div>
+        </div>
+
+        {% if first_page %}
+        <div class="photo ad_m_google box_m">
+          <script type="text/javascript"><!--
+            google_ad_client = "ca-pub-3240699513997091";
+            /* I4PC 200x200 */
+            google_ad_slot = "0620503640";
+            google_ad_width = 200;
+            google_ad_height = 200;
+            //-->
+          </script>
+          <script type="text/javascript"
+                  src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+          </script>
+          <div class="ad_foot">
+            Ads by Google
+          </div>
+        </div>
+        {% endif %}
+
+      {% for media in feed %}
+        <div class="{% if login %}box_m{% else %}box_s{% endif %}">
+
+            {% if media.comment_count %}<div class="comment_num">{{ media.comment_count }}</div>{% endif %}
+
+            <div class="photo {% if login %}size_m{% else %}size_s{% endif %}">
+                <a href="/photo/{{ media.id }}" rel="bookmark">
+                    {% if login %}
+                        <img src="{{ media.images.low_resolution.url }}" />
+                    {% else %}
+                        <img src="{{ madie.images.thumbnail.url }}" />
+                    {% endif %}
+                </a>
+            </div>
+
+            <div class="foot">
+                <div class="like {% if media.user_has_liked %}liked{% endif %}" id="like_div_{{ media.id }}">
+                {% if login %}
+                    <a href="javascript:like.action('{{ media.id }}')" title="{% if media.user_has_liked %}Unlike this{% else %}Like this{% endif %}"><span class="{% if media.user_has_liked %}liked_icon{% else %}like_icon{% endif %}" id="like_icon_{{ media.id }}">&hearts;</span><span id="like_count_{{ media.id }}" class="like_count">{{ media.like_count }}</span></a>
+                {% else %}
+                    <span class="no_link_heart">&hearts;</span><span class="like_count">{{ media.like_count }}</span>
+                {% endif %}
+                </div>
+                <div class="name">
+                    <a href="/user/{{ media.user.username|escape }}"><img src="{{ media.user.profile_picture }}" class="icon" /></a>
+                    <a href="/user/{{ media.user.username|escape }}">{{ media.user.username|escape }}</a>
+                </div>
+                <div class="description">{{ media.caption.text|escape }}</div>
+            </div>
+            <br class="clear" />
+        </div>
+      {% endfor %}
+
+        {% if max_id %}
+        <div class="pager">
+            {% ifequal path '/liked' %}
+            <a rel="next" href="/liked?max_id={{ max_id }}"></a>
+            {% else %}
+            <a rel="next" href="/?max_id={{ max_id }}"></a>
+            {% endifequal %}
+        </div>
+        {% endif %}
+    </div>
+
+</div>
+
+{% endblock %}

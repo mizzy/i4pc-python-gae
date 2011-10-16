@@ -1,0 +1,91 @@
+application: instagrampc
+version: 1
+runtime: python
+api_version: 1
+
+handlers:
+- url: /
+  script: handlers/index.py
+  secure: never
+
+- url: /login
+  script: handlers/login.py
+
+- url: /logout
+  script: handlers/login.py
+
+- url: /auth
+  script: handlers/auth.py
+
+- url: /about
+  script: handlers/about.py
+
+- url: /popular
+  script: handlers/index.py
+
+- url: /liked
+  script: handlers/index.py
+
+- url: /tag/.+
+  script: handlers/tag.py
+
+- url: /prayforjapan
+  script: handlers/prayforjapan.py
+
+- url: /like/.+
+  script: handlers/like.py
+
+- url: /unlike/.+
+  script: handlers/like.py
+
+- url: /follow/.+
+  script: handlers/follow.py
+
+- url: /unfollow/.+
+  script: handlers/follow.py
+
+- url: /comment/.+
+  script: handlers/comment.py
+
+- url: /feed
+  script: handlers/feed.py
+
+- url: /news
+  script: handlers/news.py
+
+- url: /user/.+
+  script: handlers/user.py
+
+- url: /relationship/.+
+  script: handlers/relationship.py
+
+- url: /photo/.+
+  script: handlers/photo.py
+
+- url: /css
+  static_dir: static/css
+
+- url: /js
+  static_dir: static/js
+
+- url: /img
+  static_dir: static/img
+
+- url: /favicon.ico
+  static_files: static/img/favicon.ico
+  upload: static/img/favicon.ico
+
+- url: /robots.txt
+  static_files: static/robots.txt
+  upload: static/robots.txt
+
+- url: /googlehostedservice.html
+  static_files: static/googlehostedservice.html
+  upload: static/googlehostedservice.html
+
+- url: /.+
+  script: handlers/default.py
+
+builtins:
+  - datastore_admin: on
+

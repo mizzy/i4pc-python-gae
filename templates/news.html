@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block title %}News - Instagram for PC{% endblock %}
+{% block bodyid %}news{% endblock %}
+{% block bodyclass %}column_nomal{% endblock %}
+
+{% block content %}
+
+<!-- Main content area -->
+<div id="content">
+
+    <div id="news_area">
+
+    {% for item in items %}
+        {% ifequal item.content_type 'like' %}
+        <div class="news_like">
+            <a href="/photo/{{ item.media.pk }}">
+              <img src="{{ item.media.image_versions.0.url }}" />
+            </a>
+            <span class="username"><a href="/user/{{ item.user.pk }}">{{ item.user.username }}</a></span> likes it!<br />
+            <span class="time">{{ item.time }}</span>
+        <br class="clear" />
+        </div>
+        {% endifequal %}
+
+        {% ifequal item.content_type 'comment' %}
+        <div class="news_comment">
+            <a href="/photo/{{ item.media.pk }}">
+              <img src="{{ item.media.image_versions.0.url }}" />
+            </a>
+            <span class="username"><a href="/user/{{ item.user.pk }}">{{ item.user.username }}</a></span> said <span class="comment">“{{ item.text }}”</span><br />
+            <span class="time">{{ item.time }}</span>
+        <br class="clear" />
+        </div>
+        {% endifequal %}
+
+        {% ifequal item.content_type 'friendship' %}
+        <div class="news_friendship">
+            <a href="/user/{{ item.source_user.pk }}">
+              <img src="{{ item.source_user.profile_pic_url }}" />
+            </a>
+            <span class="username"><a href="/user/{{ item.source_user.pk }}">{{ item.source_user.username }}</a></span> is now following you<br />
+            <span class="time">{{ item.time }}</span>
+        <br class="clear" />
+        </div>
+        {% endifequal %}
+
+    {% endfor %}
+
+    </div>
+
+</div>
+<!-- End of Main content area -->
+
+{% endblock %}

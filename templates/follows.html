@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block title %}
+{% if following %}
+People {{ owner.username }} is following - I4PC
+{% else %}
+People who follow {{ owner.username }} - I4PC
+{% endif %}
+{% endblock %}
+
+
+{% block autopager %}
+<script type="text/javascript">
+    $(function() {
+        $.autopager({
+            load: function() { get_outgoing_statuses(this[0]); }
+        });
+    });
+</script>
+{% endblock %}
+
+{% block innerscript %}
+<script type="text/javascript">
+$.event.add(
+    window,
+    'load',
+    function() {
+      get_outgoing_statuses($('.content')[0], {{ user.id }});
+    }
+)
+</script>
+{% endblock %}
+
+
+{% block content %}
+
+<div class="content">
+
+{% for follow in follows %}
+<a href="/user/{{ follow.username }}"><img src="{{ follow.profile_picture }}" width="50" height="50" /></a>
+<a href="/user/{{ follow.username }}">{{ follow.username }}</a>
+<a href="/user/{{ follow.username }}">{{ follow.full_name }}</a>
+<span id="{{ follow.id }}" class="outgoing_status">{% ifnotequal follow.id user.id %}<img src="/img/loading_2.gif" />{% endifnotequal %}</span>
+<br />
+{% endfor %}
+
+{% if next_cursor %}
+<div class="pager">
+  <a rel="next" href="{{ path }}?cursor={{ next_cursor }}"></a>
+</div>
+{% endif %}
+
+</div>
+
+
+{% endblock %}
+
+

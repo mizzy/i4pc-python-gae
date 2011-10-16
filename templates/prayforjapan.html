@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+
+{% block title %}#prayforjapan - I4PC{% endblock %}
+
+{% block bodyid %}prayforjapan{% endblock %}
+{% block bodyclass %}column_wide{% endblock %}
+
+{% block tweet %}#prayforjapan {% endblock %}
+
+{% block content %}
+
+<div id="content">
+
+    <h2><span class="tag">#prayforjapan</span> <span class="description">Thanks for all friends on Instagram.</span></h2>
+
+    <div id="photos_area" class="content">
+
+        <div class="photo ad_s box_s">
+            <a href="http://p.booklog.jp/books?s=7" target="_blank"><img src="/img/ad/puboo_s.png" /></a>
+            <div class="ad_foot">
+               Ads by Puboo
+            </div>
+        </div>
+
+        <div class="photo ad_s box_s">
+            <a href="http://info.jugem.jp/?eid=16471&ref=i4pc" target="_blank"><img src="/img/ad/jugem_s.png" /></a>
+            <div class="ad_foot">
+               Ads by JUGEM
+            </div>
+        </div>
+
+      {% for media in feed %}
+        <div class="box_s">
+
+            {% if media.comment_count %}<div class="comment_num">{{ media.comment_count }}</div>{% endif %}
+
+            <div class="photo size_s">
+                <a href="/photo/{{ media.id }}" rel="bookmark">
+                  <img src="{{ media.images.thumbnail.url }}" />
+                </a>
+            </div>
+
+            <div class="foot">
+                <div class="like {% if media.user_has_liked %}liked{% endif %}" id="like_div_{{ media.id }}">
+                {% if login %}
+                    <a href="javascript:like.action('{{ media.id }}')" title="{% if media.user_has_liked %}Unlike this{% else %}Like this{% endif %}"><span class="{% if media.user_has_liked %}liked_icon{% else %}like_icon{% endif %}" id="like_icon_{{ media.id }}">&hearts;</span><span id="like_count_{{ media.id }}" class="like_count">{{ media.like_count }}</span></a>
+                {% else %}
+                    <div class="no_link"><span class="no_link_heart">&hearts;</span><span class="like_count">{{ media.like_count }}</span></div>
+                {% endif %}
+                </div>
+                <div class="name">
+                    <a href="/user/{{ media.user.username|escape }}"><img src="{{ media.user.profile_picture }}" class="icon" /></a>
+                    <a href="/user/{{ media.user.username|escape }}">{{ media.user.username|escape }}</a>
+                </div>
+                <div class="description">{{ media.caption.text|escape }}</div>
+            </div>
+        </div>
+      {% endfor %}
+        {% if max_id %}
+        <div class="pager">
+            <a rel="next" href="/prayforjapan?max_id={{ max_id }}"></a>
+        </div>
+        {% endif %}
+    </div>
+
+
+	</div>
+
+</div>
+<!-- End of Main content area -->
+
+{% endblock %}

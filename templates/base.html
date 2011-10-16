@@ -1,0 +1,128 @@
+<!Doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+
+<title>{% block title %}{% endblock %}</title>
+
+<meta name="keywords" content="I4PC, Instagram for PC, Instagram, Viewer, Photo, iPhone, mizzy, daiskip, web, browsing, service" />
+<meta name="description" content="I4PC(Instagram for PC) is a web service for browsing photos on Instagram." />
+<meta name="google-site-verification" content="8-w2MfDZYbuqv4uPXfCsSba6ciRfdfe2RXjC5SlDMJk" />
+
+{% block meta %}{% endblock %}
+
+{% block feed %}
+<link rel="alternate" href="/feed"  type="application/rss+xml" title="" id="gallery" />
+{% endblock %}
+
+<link rel="shortcut icon" href="/img/favicon.ico" type="image/x-icon" />
+<link rel="apple-touch-icon" href="/img/apple-touch-icon.png" />
+
+<link rel="stylesheet" href="/css/style.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="/css/emoji-iphone.css" type="text/css" media="screen" />
+
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-21742395-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+</head>
+
+<body id="{% block bodyid %}{% endblock %}" class="{% block bodyclass %}{% endblock %}">
+
+<header>
+
+    <nav>
+        <ul>
+            {% if login %}
+            <li><a class="menu_feed" href="/">Feed</a></li>
+            <li><a class="menu_liked" href="/liked">Liked</a></li>
+            <li><a class="menu_you" href="/user/{{ user.username }}">You</a></li>
+            <li><a class="menu_popular" href="/popular">Popular</a></li>
+            <li><a class="menu_about" href="/about">About</a></li>
+            <li><a class="menu_logout" href="/logout">Logout</a></li>
+            {% else %}
+            <li><a class="menu_about" href="/about">About</a></li>
+            <li><a class="menu_login" href="/login">Login</a></li>
+            {% endif %}
+        </ul>
+    </nav>
+
+
+    <h1><a href="/">I4PC</a></h1>
+
+</header>
+
+
+{% block content %}
+{% endblock %}
+
+{% block share %}
+<div class="share">
+
+    <div class="hatena">
+        <a href="http://b.hatena.ne.jp/entry/http://www.i4pc.jp{{ path }}" class="hatena-bookmark-button" data-hatena-bookmark-layout="standard" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" /></a>
+        <script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+    </div>
+
+    <div class="twitter">
+        <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://www.i4pc.jp{{ path }}" data-text="{% block tweet %}{% endblock %} #i4pc #instagram" data-count="horizontal" data-via="" data-lang="en">Tweet</a>
+        <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+    </div>
+
+    <div class="facebook">
+        <iframe src="http://www.facebook.com/plugins/like.php?href=http%3A%2F%2Fwww.i4pc.jp{{ path }}&amp;layout=button_count&amp;show_faces=true&amp;width=120&amp;action=like&amp;font=arial&amp;colorscheme=light&amp;height=21" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:120px; height:21px;" allowTransparency="true"></iframe>
+    </div>
+
+    <div class="pfj"><a href="/prayforjapan">#prayforjapan</a></div>
+
+</div>
+{% endblock %}
+
+
+<a class="top hidden" href="#" title="Back to top">Top</a>
+
+<footer id="footer">
+&copy; I4PC
+</footer>
+
+<script type="text/javascript" src="/js/modernizr.custom.js"></script>
+<script type="text/javascript" src="/js/jquery.js"></script>
+<script type="text/javascript" src="/js/jquery.autopager.js"></script> 
+
+{% block autopager %}
+<script type="text/javascript">
+    $(function() {
+        $.autopager();
+    });
+</script>
+{% endblock %}
+
+<script type="text/javascript" src="/js/like.js"></script>
+<script type="text/javascript" src="/js/comment.js"></script>
+<script type="text/javascript" src="/js/follow.js"></script>
+
+{% block innerscript %}
+{% endblock %}
+
+<script src="/js/waypoints.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+	$('.top').addClass('hidden');
+	$('#content').waypoint(function(event, direction) {
+		$('.top').toggleClass('hidden', direction === "up");
+	});
+});
+</script>
+
+</body>
+</html>

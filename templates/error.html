@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block title %}Error - I4PC{% endblock %}
+{% block bodyid %}logout{% endblock %}
+
+{% block content %}
+
+<div id="content">
+<p>
+Error!
+</p>
+
+{% if message %}
+<p>{{ message }}</p>
+{% else %}
+
+<p>
+Something wrong with Instagram.
+</p>
+
+<p>
+Please try later.
+</p>
+{% endif %}
+
+</div>
+
+
+
+{% endblock %}

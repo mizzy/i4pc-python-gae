@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:media="http://search.yahoo.com/mrss/"
+     xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>{{ title }}</title>
+    <description>Feed Description</description>
+    <link>http://www.example_url.com</link>
+    {% for media in feed %}
+    <item>
+      <title>{{ media.user.username }}</title>
+      <media:description>{{ media.caption.text }}</media:description>
+      <link>http://www.i4pc.jp/photo/{{ media.id }}</link>
+      <media:thumbnail url="{{ media.images.thumbnail.url }}" />
+      <media:content url="{{ media.images.standard_resolution.url }}" />
+    </item>
+    {% endfor %}
+  </channel>
+</rss>

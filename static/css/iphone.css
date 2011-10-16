@@ -1,0 +1,31 @@
+/*****************************************
+
+	Instagram for PC / iphone
+	2010.10.28
+	daiskip
+
+******************************************/
+
+body {
+	background: #f8faea;
+	font-family: Helvetica, HiraKakuProN-W3, sans-serif;
+	-webkit-text-size-adjust: none;
+	line-height: 1.5;
+	}
+
+/* @group Layout */
+
+nav {
+	display: none !important;
+	}
+
+/* @end */
+
+
+/* @group header */
+
+h1 a {
+	width: 80px;
+	}
+
+/* @end */

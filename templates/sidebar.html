@@ -1,0 +1,72 @@
+<!-- Sidebar -->
+<aside>
+
+{% ifequal user.pk owner.pk %}
+
+    <div class="profile_area">
+
+        <div class="profile">
+            <div class="icon"><a href="/user/{{ user.pk }}"><img src="{{ user.profile_pic_url }}" /></a></div>
+            <div class="screen">
+                <a href="/user/{{ user.pk }}">{{ user.username }}</a>
+                <p>{{ user.full_name }}</p>
+            </div>
+        </div>
+
+        <div class="stats">
+            <ul>
+                <li class="photos"><span>{{ user.media_count }}</span></li>
+                <li class="followers"><span>{{ user.follower_count }}</span></li>
+                <li class="following"><span>{{ user.following_count }}</span></li>
+            </ul>
+        </div>
+        <br class="clear" />
+
+    </div>
+
+    <div class="following_area">
+    {% for following in followings %}
+    <a href="/user/{{ following.pk }}" title="{{ following.username }}"><img src="{{ following.profile_pic_url }}" class="icon" /></a>
+    {% endfor %}
+    </div>
+
+{% else %}
+
+    <div class="profile_area">
+
+        <div class="profile">
+            <div class="icon"><a href="/user/{{ owner.pk }}"><img src="{{ owner.profile_pic_url }}" /></a></div>
+            <div class="screen">
+                <a href="/user/{{ owner.pk }}">{{ owner.username }}</a>
+                <p>{{ owner.full_name }}</p>
+            </div>
+        </div>
+
+        <div class="stats">
+            <ul>
+                <li class="photos"><span>{{ owner.media_count }}</span></li>
+                <li class="followers"><span>{{ owner.follower_count }}</span></li>
+                <li class="following"><span>{{ owner.following_count }}</span></li>
+            </ul>
+        </div>
+        <br class="clear" />
+
+    </div>
+
+
+    {% if login %}
+    <div class="follow_area">
+        {% if following %}
+        <a href="" class="unfollow">Unfollow</a>
+        {% else %}
+        <a href="" class="follow">Follow</a>
+        {% endif %}
+    </div>
+    {% endif %}
+
+
+{% endifequal %}
+
+</aside>
+<!-- End Sidebar -->
+
